@@ -219,8 +219,12 @@
         *Name: "Manual paper feed"
 
         *% There isn't really a "command" for this, but we MUST specify one.
-        *% So we leave it blank.
-        *Command: ""
+        *% So we make a useless one.
+        *Command: CmdSelect
+        {
+            *Order: JOB_SETUP.100
+            *Cmd: ""
+        }
     }
 }
 
@@ -233,7 +237,11 @@
 
         *% There isn't really a "command" for this, but we MUST specify one.
         *% So we leave it blank.
-        *Command: ""
+        *Command: CmdSelect
+        {
+            *Order: JOB_SETUP.100
+            *Cmd: ""
+        }
     }
 }
 
@@ -250,7 +258,11 @@
         
         *% There isn't really a "command" for this, but we MUST specify one.
         *% So we leave it blank.
-        *Command: ""
+        *Command: CmdSelect
+        {
+            *Order: JOB_SETUP.100
+            *Cmd: ""
+        }
 
         *% Oh girl, fun fun fun here.
         *% The LetterMaster has a fixed minimum top and left margin, due to
@@ -303,7 +315,11 @@
 
         *% As before, we need to specify some command. This is controlled by
         *% a switch, not a command, so we leave it blank.
-        *Command: ""
+        *Command: CmdSelect
+        {
+            *Order: JOB_SETUP.100
+            *Cmd: ""
+        }
 
         *DPI: PAIR(300, 300)
         *TextDPI: PAIR(300, 300)
