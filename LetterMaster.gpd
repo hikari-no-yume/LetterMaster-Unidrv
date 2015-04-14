@@ -100,9 +100,6 @@
 *% special, but I'll be careful. So TRUE it is.
 *UseSpaceForXMove?: TRUE
 
-*% I'm not certain, but I guess that I should "favor LF spacing" here
-*YMoveAttributes: LIST(FAV_LF)
-
 *% Text Printing Attributes
 *% ========================
 
