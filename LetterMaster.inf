@@ -26,7 +26,7 @@ ClassGuid={4d36e979-e325-11ce-bfc1-08002be10318}
 DriverVer=04/12/2015, 1.0.0.0
 
 [Manufacturer]
-"Royal Consumer Business Products"=Royal_Consumer_Business_Products, NTamd64, NTia64
+"Royal Consumer Business Products"=Royal_Consumer_Business_Products, NTamd64, NTia64, NTarm
 
 [Royal_Consumer_Business_Products]
 "Royal LetterMaster" = LetterMaster.gpd, Royal_LetterMaster
@@ -36,6 +36,10 @@ DriverVer=04/12/2015, 1.0.0.0
 
 [Royal_Consumer_Business_Products.NTia64]
 "Royal LetterMaster" = LetterMaster.gpd, Royal_LetterMaster
+
+[Royal_Consumer_Business_Products.NTarm]
+"Royal LetterMaster" = LetterMaster.gpd, Royal_LetterMaster
+
 
 [LetterMaster.gpd]
 CopyFiles=@LetterMaster.gpd
