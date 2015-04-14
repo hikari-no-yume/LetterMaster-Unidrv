@@ -29,16 +29,16 @@ DriverVer=04/12/2015, 1.0.0.0
 "Royal Consumer Business Products"=Royal_Consumer_Business_Products, NTamd64, NTia64, NTarm
 
 [Royal_Consumer_Business_Products]
-"Royal LetterMaster" = LetterMaster.gpd, Royal_LetterMaster
+"Royal LetterMaster" = LetterMaster.gpd, LPTENUM\Royal_LetterMaster
 
 [Royal_Consumer_Business_Products.NTamd64]
-"Royal LetterMaster" = LetterMaster.gpd, Royal_LetterMaster
+"Royal LetterMaster" = LetterMaster.gpd, LPTENUM\Royal_LetterMaster
 
 [Royal_Consumer_Business_Products.NTia64]
-"Royal LetterMaster" = LetterMaster.gpd, Royal_LetterMaster
+"Royal LetterMaster" = LetterMaster.gpd, LPTENUM\Royal_LetterMaster
 
 [Royal_Consumer_Business_Products.NTarm]
-"Royal LetterMaster" = LetterMaster.gpd, Royal_LetterMaster
+"Royal LetterMaster" = LetterMaster.gpd, LPTENUM\Royal_LetterMaster
 
 
 [LetterMaster.gpd]
