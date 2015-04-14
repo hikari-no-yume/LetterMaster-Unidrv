@@ -1,0 +1,70 @@
+; Royal LetterMaster minidriver
+; 
+; Copyright © 2015 Andrea Faulds.
+; 
+; I claim no rights to the Royal LetterMaster name.
+; 
+; This program is free software: you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation, either version 3 of the License, or
+; (at your option) any later version.
+; 
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+; 
+; You should have received a copy of the GNU General Public License
+; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+[Version]
+Signature="$Windows NT$"
+Provider="Royal Consumer Business Products"
+Class=Printer
+ClassGuid={4d36e979-e325-11ce-bfc1-08002be10318}
+; MM/DD/YY,XX.XX.XX.XX
+DriverVer=04/12/2015, 1.0.0.0
+
+[Manufacturer]
+"Royal Consumer Business Products"=Royal_Consumer_Business_Products, NTamd64, NTia64
+
+[Royal_Consumer_Business_Products]
+"Royal LetterMaster" = LetterMaster.gpd, Royal_LetterMaster
+
+[Royal_Consumer_Business_Products.NTamd64]
+"Royal LetterMaster" = LetterMaster.gpd, Royal_LetterMaster
+
+[Royal_Consumer_Business_Products.NTia64]
+"Royal LetterMaster" = LetterMaster.gpd, Royal_LetterMaster
+
+[LetterMaster.gpd]
+CopyFiles=@LetterMaster.gpd
+DataSection=UNIDRV_DATA
+DataFile=LetterMaster.gpd
+Include=NTPRINT.INF
+Needs=UNIDRV.OEM
+
+[DestinationDirs]
+DefaultDestDir=66000
+
+[SourceDisksNames.x86]
+1=%Disk1%,,,""
+
+[SourceDisksNames.amd64]
+1=%Disk1%,,,""
+
+; ...wait, who still uses Itanium? :p
+[SourceDisksNames.ia64]
+1=%Disk1%,,,""
+
+; if you must...
+[SourceDisksNames.arm]
+1=%Disk1%,,,""
+
+[SourceDisksFiles]
+LetterMaster.gpd    =1
+
+[Strings]
+Disk1               = "OEM Driver Install Disk"
+PrinterClassName    = "Printer"
+OEM                 = "Royal Consumer Business Products"

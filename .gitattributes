@@ -1,0 +1,4 @@
+# We need stuff to be CRLF... because Windows!
+LetterMaster.inf text eol=crlf
+LetterMaster.gpd text eol=crlf
+

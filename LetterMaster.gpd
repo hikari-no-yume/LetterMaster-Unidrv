@@ -1,0 +1,289 @@
+*% Royal LetterMaster minidriver
+*% 
+*% Copyright © 2015 Andrea Faulds.
+*% 
+*% I claim no rights to the Royal LetterMaster name.
+*% 
+*% This program is free software: you can redistribute it and/or modify
+*% it under the terms of the GNU General Public License as published by
+*% the Free Software Foundation, either version 3 of the License, or
+*% (at your option) any later version.
+*% 
+*% This program is distributed in the hope that it will be useful,
+*% but WITHOUT ANY WARRANTY; without even the implied warranty of
+*% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*% GNU General Public License for more details.
+*% 
+*% You should have received a copy of the GNU General Public License
+*% along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+*% The headings below are the names of sections and subsections of the
+*% MSDN documentation on the Microsoft Universal Printer Driver.
+*% I went through it, feature by feature, and added each to this file where
+*% applicable to the LetterMaster.
+*% See: https://msdn.microsoft.com/en-us/library/ff556567%28v=vs.85%29.aspx
+
+*% Root-Level-Only Attributes
+*% ==========================
+
+%ModelName: "Royal LetterMaster"
+
+*GPDFileName: "LetterMaster.gpd"
+*% This is the version of the file format itself
+*GPDSpecVersion: "1.0"
+*% Whereas this is the version of this specific file
+*GPDFileVersion: "0.1"
+
+*% Master units in GPD files are fractions of an inch
+*% It should be the lowest common multiple of your various units
+
+*% Page B-2 in the LetterMaster manual states that
+*% columns per line is 66 characters/line at 1/10", or 80 at 1/12"
+*% So our horizontal unit is 1/60" (the LCM of 10 and 12)
+
+*% Page 1-7 says that a single line feed is 1/6" and a 1-1/2 line feed is 1/4"
+*% So our vertical unit is 1/12" (the LCM of 4 and 6)
+*MasterUnits: PAIR(60, 12)
+
+*ModelName: "Royal LetterMaster"
+
+*% I don't actually know why it's TTY vs PAGE or SERIAL
+*% But that's what the Generic / Text Only driver does, and it works
+*PrinterType: TTY
+
+*% Page B-1 claims a print speed of 10 CPS (characters per second)
+*PrintRate: 10
+*PrintRateUnit: CPS
+
+*% General Printing Attributes
+*% ===========================
+
+*% Printer Capability Attributes
+*% -----------------------------
+
+*% The LetterMaster supports bold (i.e. double-weight) and underline
+*TextCaps: LIST(TC_SA_DOUBLE, TC_UA_ABLE)
+
+*% Color Attributes
+*% ----------------
+
+*% None applicable.
+
+*% Cursor Attributes
+*% -----------------
+
+*% The LetterMaster has a pretty big built-in margin: the print head can't
+*% cover the full horizontal width of the paper, only a smaller printable
+*% area. The manual says on page B-2 that the "print line width" is 6.6".
+*% Because of this inherent margin, after a carriage return, the head is
+*% at the "printable x origin". There's no further left it can go.
+*CursorXAfterCR: AT_PRINTABLE_X_ORIGIN
+
+*% As specified page 3-3, Form Feed will make the printer feed out the page
+*% I assume that's what Microsoft mean by "eject".
+*EjectPageWithFF?: TRUE
+
+*% The maximum line spacing seems to be 1-1/2 (unless you fake 2 with NLs)
+*% Page 1-6 says a 1-1/2 line spacing is 1/4"
+*% Our master vertical unit is 1/12", so we put 3/12"
+*% FIXME: What if line spacing is set to 1 on the Control Panel?
+*% Should this be a conditional block?
+*MaxLineSpacing: 3
+
+*% MS documentation states:
+*% > If TRUE, Unidrv uses spaces for coarse moves and NULLs for fine moves.
+*% > If FALSE, Unidrv uses NULLs for all moves.
+*% LetterMaster manual page 3 states that NUL and DEL are ignored
+*% If by "ignored" they mean "print head isn't even moved", then we have a 
+*% problem if Windows outputs NULs. It might just mean it doesn't do anything
+*% special, but I'll be careful. So TRUE it is.
+*UseSpaceForXMove?: TRUE
+
+*% I'm not certain, but I guess that I should "favor LF spacing" here
+*YMoveAttributes: LIST(FAV_LF)
+
+*% Text Printing Attributes
+*% ========================
+
+*% None of this stuff seems applicable.
+
+*% Raster Printing Attributes
+*% ==========================
+
+*% None of this stuff seems applicable.
+
+*% Vector Printing Attributes
+*% ==========================
+
+*% None of this stuff seems applicable.
+
+*% General Printing Commands
+*% =========================
+
+*% Fun fact: all the LetterMaster's commands are copied from the Diable 630!
+*% Since it was a very popular daisy wheel printer, most daisy wheel printers
+*% released after it had Diablo 630 emulation. The LetterMaster, from what I
+*% can tell, does not profess this ability anywhere in the manual. But it is
+*% clear that the LetterMaster's entire command set is a subset of the 630's.
+*% See: http://www.undocprint.org/formats/page_description_languages/diablo_630
+
+*% Color Commands
+*% --------------
+
+*% None of this stuff seems applicable.
+
+*% Cursor Commands
+*% ---------------
+
+*% The LetterMaster doesn't really have proper cursor commands beyond your 
+*% typical BS/CR/FF/LF, and space of course.
+*% It does support "half-line forward" (page 3-4 and page 3-7) but Windows
+*% does not appear to support such a thing, only relative commands (i.e.
+*% "go X units down"), unfortunately.
+
+*% Page 3-3 says ASCII BS (0x08), CR (0x0D), FF (0x0C) and LF (0x0A) supported
+*% They do exactly what you expect them to.
+
+*Command: CmdBackSpace: "<08>"
+*Command: CmdCR: "<0D>"
+*Command: CmdFF: "<0C>"
+*Command: CmdLF: "<0A>"
+
+*% Printer Configuration Commands
+*% ==============================
+
+*% The LetterMaster is pretty plain and simple here! Nothing special needed for
+*% starting or ending printing. ^^
+
+*% Option Selection Commands
+*% =========================
+
+*% The LetterMaster has no special options, at least not of the kind requiring
+*% special data to be sent from the PC.
+
+*% Text Printing Commands
+*% ======================
+
+*% Commands for Device Fonts
+*% -------------------------
+
+*% There's a section for this in the manual, but no such things exist. Huh?
+
+*% Commands for Downloaded Fonts
+*% -----------------------------
+
+*% None of this stuff seems applicable.
+
+*% Commands for Simulated Fonts
+*% -----------------------------
+
+*% I don't really know if the the print wheel typeface is a "simulated font".
+*% Microsoft don't seem to define that anywhere. But it seems applicable.
+*% And this is the place where all the formatting stuff seems to be.
+
+*% In case you're wondering: 0x1B is ASCII's ESC (escape) character.
+*% And yes, as mentioned earlier, all these are the same as on the Diablo 630.
+
+*% Bold on and off, see page 3-4 and page 3-8
+*Command: CmdBoldOff: "<1B>&"
+*Command: CmdBoldOn: "<1B>O"
+
+*% Underline on and off, see page 3-4 and page 3-7
+*Command: CmdUnderlineOff: "<1B>R"
+*Command: CmdUnderlineOn: "<1B>E"
+
+*% Raster Printing Commands
+*% ========================
+
+*% The LetterMaster doesn't support raster images.
+*% This is a bit of a shame, really. The Diablo 630 did, albeit very slowly.
+*% Well, you get what you pay for.
+
+*% Vector Printing Commands
+*% ========================
+
+*% The LetterMaster doesn't support vector images.
+
+*% Standard Features
+*% =================
+
+*% From what I can see, MANUAL is the only applicable paper feed type.
+*Feature: InputBin
+{
+    *Option: MANUAL
+}
+
+*% The LetterMaster doesn't really support landscape printing ;)
+*Feature: Orientation
+{
+    *Option: PORTRAIT
+}
+
+*% The LetterMaster supports 8" and 8.5" widths (page 1-3)
+*% Windows only has the 8.5"x11" size US Letter built-in, there's no 8" size
+*% Presumably 8" would be the ancient Government Letter size which is now
+*% obsolete.
+*% FIXME: Add Government Letter size.
+*Feature: PaperSize
+{
+    *Option: LETTER
+    {
+        *% Oh girl, fun fun fun here.
+        *% The LetterMaster has a fixed minimum top and left margin, due to
+        *% the short width of the printer. So we must define the printable
+        *% area with this in mind.
+
+        *% This is basically defined by our margins.
+
+        *% We know that US Letter is 8.5"x11".
+        *% Page B-2 of the manual claims a print line width of 6.6".
+        *% Looking at the margins shown on the ruler, the left margin is
+        *% 10 chars at 10cpi, or 12 chars at 12 cpi, so 1".
+        *% 8.5" - 1" - 6.6" = .9", so that is our right margin.
+
+        *% The top margin isn't specified anywhere, and that's because there is
+        *% none. If you're using continuous feed paper, you can probably put 
+        *% it in such that it'd start printing right at the top of it. But,
+        *% if you're using a cut sheet, you basically have to have a top margin
+        *% of about 1", because of the gap between the paper bail and actual
+        *% print head.
+        *% Similarly, there's no minimum bottom margin. But beyond about 1"
+        *% from the bottom of the page, the LetterMaster will have difficulty
+        *% moving a cut sheet properly for line spacing.
+        *% So, we'll pretend the top and bottom margins are 1". Therefore our
+        *% vertical area is 11" - 1" - 1" = 9"
+
+        *% So, to recap:
+        *% Area: 6.6"x9"
+        *% Printable origin (left/top margin): (1", 1")
+
+        *% Our master horizontal unit is 1/60", so we put 396/60"
+        *% Our master vertical unit is 1/12", so we put 108/12"
+        *PrintableArea: PAIR(396, 108)
+
+        *% Our master horizontal unit is 1/60", so we put 60/60"
+        *% Our master vertical unit is 1/12", so we put 12/12"
+        *PrintableOrigin: PAIR(60, 12)
+    }
+}
+
+*% Windows has no built-in resolutions, you must make them custom. Woop. :/
+*% For now let's just assume 12cpi pitch and invent a nonsense DPI.
+*% It's not like the LetterMaster actually supports raster or vector graphics.
+*% FIXME: Support 10cpi pitch too.
+*Feature: Resolution
+{
+    *Option: 10cpi
+    {
+        *DPI: PAIR(300, 300)
+        *TextDPI: PAIR(300, 300)
+    }
+}
+
+*% Customized Features
+*% ===================
+
+*% This is probably where the 1 or 1-1/2 line spacing and 10 or 12 cpi pitch
+*% options should be handled. Maybe. I'm not sure.
+*% FIXME: Do those.
