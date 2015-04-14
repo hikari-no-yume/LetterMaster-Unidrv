@@ -9,4 +9,4 @@ It's also pointless. After struggling with it and being unable to get it to work
 
 Oh well.
 
-If you want to get this to work, you'll need to start Windows in the mode where it doesn't check driver signatures, because it's unsigned. Even surmounting that hurdle, though, the driver seems uninstallable: something's wrong with it, but I'm not sure exactly what.
+If you want to get this to work, you'll need to [start Windows in the mode where it doesn't check driver signatures](http://revryl.com/2013/02/19/force-driver-windows-8/), because it's unsigned. Even surmounting that hurdle, though, the driver seems uninstallable: something's wrong with it, but I'm not sure exactly what.
