@@ -212,12 +212,29 @@
 *Feature: InputBin
 {
     *Option: MANUAL
+    {
+        *% You're supposed to use localisable strings.
+        *% But let's be honest here: I'm not going to write a resource DLL.
+        *% Nor do I need one, this is only ever going to be in English.
+        *Name: "Manual paper feed"
+
+        *% There isn't really a "command" for this, but we MUST specify one.
+        *% So we leave it blank.
+        *Command: ""
+    }
 }
 
 *% The LetterMaster doesn't really support landscape printing ;)
 *Feature: Orientation
 {
     *Option: PORTRAIT
+    {
+        *Name: "Portrait"
+
+        *% There isn't really a "command" for this, but we MUST specify one.
+        *% So we leave it blank.
+        *Command: ""
+    }
 }
 
 *% The LetterMaster supports 8" and 8.5" widths (page 1-3)
@@ -229,6 +246,12 @@
 {
     *Option: LETTER
     {
+        *Name: "Letter"
+        
+        *% There isn't really a "command" for this, but we MUST specify one.
+        *% So we leave it blank.
+        *Command: ""
+
         *% Oh girl, fun fun fun here.
         *% The LetterMaster has a fixed minimum top and left margin, due to
         *% the short width of the printer. So we must define the printable
@@ -276,6 +299,12 @@
 {
     *Option: 10cpi
     {
+        *Name: "10cpi"
+
+        *% As before, we need to specify some command. This is controlled by
+        *% a switch, not a command, so we leave it blank.
+        *Command: ""
+
         *DPI: PAIR(300, 300)
         *TextDPI: PAIR(300, 300)
     }
